@@ -1,9 +1,6 @@
 import torch
 from torch import nn
 
-#from thop import profile
-#from thop import clever_format
-
 class SKConv(nn.Module):
     def __init__(self, input_dim, output_dim, dim1, dim2, pool_dim,  M=4, G=1, r=4, stride=1 ,L=32):
         """ Constructor
