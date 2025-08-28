@@ -1,5 +1,10 @@
+# -*- coding: utf-8 -*-
+
 import torch
 from torch import nn
+
+from .utils import ScaledDotProductAttention
+
 
 class SKConv(nn.Module):
     def __init__(self, input_dim, output_dim, dim1, dim2, pool_dim,  M=4, G=1, r=4, stride=1 ,L=32):
@@ -63,7 +68,6 @@ class SKConv(nn.Module):
                self.fcs.append(
                  nn.Conv1d(in_channels= d, out_channels=output_dim, kernel_size=1, stride=1)
                  )
-
 
 
 
@@ -156,48 +160,15 @@ class SKUnit(nn.Module):
             )
         
         self.relu = nn.ReLU(inplace=True)
-    
+
     def forward(self, x):
         residual = x
         
         out = self.conv1(x)
         out = self.conv2_sk(out)
         #out = self.conv3(out)
-        
+        # print(f"Output shape: {out.size()}")
+        # out = self.attention(out)
         #return self.relu(out + self.shortcut(residual))
         #return self.relu(out)
         return out
-    
-class SKNet(nn.Module):
-    def __init__(self,dim1,dim2,pool, nums_block_list = [3, 4, 6, 3], strides_list = [1, 2, 2, 2]):
-        super(SKNet, self).__init__()
-        self.basic_conv = nn.Sequential(
-            nn.Conv2d(3, 64, 7, 2, 3, bias=False),
-            nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True),
-        )
-        
-        self.maxpool = nn.MaxPool2d(3,2,1)
-        
-        self.stage_1 = self._make_layer(64, 96, 96,dim1,dim2,pool, nums_block=nums_block_list[0], stride=strides_list[0])
-        self.stage_2 = self._make_layer(96, 128 , 128,dim1,dim2,pool, nums_block=nums_block_list[1], stride=strides_list[1])
-        self.stage_3 = self._make_layer(128, 256, 256,dim1,dim2,pool, nums_block=nums_block_list[2], stride=strides_list[2])
-        self.stage_4 = self._make_layer(1024, 1024, 2048,dim1,dim2,pool, nums_block=nums_block_list[3], stride=strides_list[3])
-     
-        
-        
-    def _make_layer(self, in_feats, mid_feats, out_feats,dim1,dim2,pool,nums_block, stride=1):
-        layers=[SKUnit(in_feats, mid_feats, out_feats,dim1,dim2,pool, stride=stride)]
-        for _ in range(1,nums_block):
-            layers.append(SKUnit(out_feats, mid_feats, out_feats,dim1,dim2,pool, stride=stride))
-        return nn.Sequential(*layers)
-
-    def forward(self, x):
-        fea = self.basic_conv(x)
-        fea = self.maxpool(fea)
-        fea = self.stage_1(fea)
-        fea = self.stage_2(fea)
-        fea = self.stage_3(fea)
-        #fea = self.stage_4(fea)
-        
-        return fea

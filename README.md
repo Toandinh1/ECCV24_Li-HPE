@@ -1,2 +1,0 @@
-# HPE-Li model
-Requiment: 
