@@ -50,14 +50,14 @@ This repo is the official implementation for [HPE-Li: WiFi-enabled Lightweight D
     - Test/
               ...
 ```
-## Run Simulation (Training and Testing)
+## Run Simulations
 
 ### MM-Fi dataset
 ```
 python att_mmfi.py 
 ```
 
-### Training WiPose dataset
+### WiPose dataset
 
 ```
 python att_wipose.py
@@ -67,7 +67,7 @@ python att_wipose.py
 ```
 python complexity.py
 ```
-### Using denoiser
+### Using Denoiser
 
 ```
 python denoiser_training.py
@@ -82,7 +82,7 @@ Thanks to the original authors for their work!
 
 ## Citation
 
-Please cite this work if you find it useful:.
+Please cite this work if you find it useful.
 
 ```
 @inproceedings{d2024hpe,
