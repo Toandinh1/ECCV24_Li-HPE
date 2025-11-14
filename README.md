@@ -3,7 +3,7 @@ This repo is the official implementation for [HPE-Li: WiFi-enabled Lightweight D
 
 ## Framework
 
-![image](Architecture_SKNet.pdf)
+![image](Architecture.jpg)
 
 ## Data Preparation
 ### Download datasets.
