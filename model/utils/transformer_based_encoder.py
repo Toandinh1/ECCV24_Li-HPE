@@ -6,7 +6,6 @@ class MultiAxisAttention(nn.Module):
         super(MultiAxisAttention, self).__init__()
         self.embed_dim = embed_dim
         
-        # Tăng kênh đầu vào thành embed_dim
         self.expand_channels = nn.Sequential(
             nn.Conv2d(input_channels, embed_dim, kernel_size=1),
             nn.BatchNorm2d(embed_dim),
