@@ -74,7 +74,7 @@ python denoiser_training.py
 ```
 ## Visualization 
 
-![image](visualization.jpg)
+![image](Visualization.jpg)
 
 ## Acknowledgements
 
