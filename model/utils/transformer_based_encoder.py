@@ -12,7 +12,7 @@ class MultiAxisAttention(nn.Module):
             nn.ReLU()
         )
         
-        # Attention theo Channel
+        # Attention per Channel
         self.channel_attention = nn.ModuleList([
             nn.TransformerEncoderLayer(
                 d_model=embed_dim, nhead=num_heads, dim_feedforward=dim_feedforward, dropout=dropout
@@ -20,7 +20,7 @@ class MultiAxisAttention(nn.Module):
             for _ in range(depth)
         ])
         
-        # Attention theo Frequency
+        # Attention per Frequency
         self.freq_attention = nn.ModuleList([
             nn.TransformerEncoderLayer(
                 d_model=embed_dim, nhead=num_heads, dim_feedforward=dim_feedforward, dropout=dropout
@@ -28,7 +28,7 @@ class MultiAxisAttention(nn.Module):
             for _ in range(depth)
         ])
         
-        # Giảm subcarriers
+        # Reduce subcarriers
         self.reduce_frequency = nn.Sequential(
             nn.Conv2d(embed_dim, embed_dim, kernel_size=(3, 1), padding=(1, 0)),
             nn.BatchNorm2d(embed_dim),
@@ -36,7 +36,7 @@ class MultiAxisAttention(nn.Module):
             nn.AdaptiveAvgPool2d((embed_dim // reduction_factor, None))
         )
         
-        # Fully connected layer để tổng hợp đặc trưng
+        # Fully connected layer 
         self.fc = nn.Linear(embed_dim, embed_dim)
 
     def forward(self, x):
@@ -46,35 +46,35 @@ class MultiAxisAttention(nn.Module):
         """
         B, C, F, T = x.shape
 
-        # **Tăng số kênh (Expand Channels)**
+        # **(Expand Channels)**
         x = self.expand_channels(x)  # [B, embed_dim, F, T]
 
         # **Channel Attention**
-        # Reshape đầu vào để phù hợp với Transformer
+        # Reshape to fit Transformer
         x_c = x.permute(0, 2, 3, 1).reshape(B * F * T, self.embed_dim)  # [B * F * T, embed_dim]
         x_c = x_c.view(F * T, B, self.embed_dim)  # [seq_len, batch_size, embed_dim]
         
         for layer in self.channel_attention:
-            x_c = layer(x_c)  # Transformer xử lý trên Channel
+            x_c = layer(x_c)  # Transformer per Channel
 
-        # Khôi phục lại kích thước sau Channel Attention
+        # Recover size after Channel Attention
         x_c = x_c.permute(1, 2, 0).view(B, self.embed_dim, F, T)  # [B, embed_dim, F, T]
 
         # **Frequency Attention**
-        # Reshape đầu vào để phù hợp với Transformer
+        # Reshape input to fit Transformer
         x_f = x.permute(0, 1, 3, 2).reshape(B * self.embed_dim * T, F)  # [B * embed_dim * T, F]
         x_f = x_f.view(F, B * T, self.embed_dim)  # [seq_len, batch_size, embed_dim]
         
         for layer in self.freq_attention:
             x_f = layer(x_f)  # Transformer xử lý trên Frequency
 
-        # Khôi phục lại kích thước sau Frequency Attention
+        # Recover size after Frequency Attention
         x_f = x_f.permute(1, 2, 0).view(B, self.embed_dim, T, F).permute(0, 1, 3, 2)  # [B, embed_dim, F, T]
 
-        # **Tổng hợp đặc trưng**
-        out = x_c + x_f  # Tổng hợp channel và frequency
+        # **Features extraction**
+        out = x_c + x_f  # Extract per Channel and Frequency
 
-        # **Giảm subcarriers (Reduce Frequency)**
+        # **Reduce subcarriers (Reduce Frequency)**
         out = self.reduce_frequency(out)  # [B, embed_dim, F_reduced, T]
 
         # **Projection Layer**
