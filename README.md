@@ -72,6 +72,9 @@ python complexity.py
 ```
 python denoiser_training.py
 ```
+## Visualization 
+
+![image](visualization.jpg)
 
 ## Acknowledgements
 
