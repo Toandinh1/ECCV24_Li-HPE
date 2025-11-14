@@ -42,4 +42,51 @@ This repo is the official implementation for [HPE-Li: WiFi-enabled Lightweight D
     - Test/
               ...
 ```
+## Run Simulation (Training and Testing)
+
+### MM-Fi dataset
+```
+python att_mmfi.py 
+```
+
+### Training WiPose dataset
+
+```
+python att_wipose.py
+```
+### Check Complexity
+
+```
+python complexity.py
+```
+### Using denoiser
+
+```
+python denoiser_training.py
+```
+
+## Acknowledgements
+
+This repo is based on [MetaFi++](https://github.com/pridy999/metafi_pose_estimation). The data processing is borrowed from [MM-Fi](https://github.com/ybhbingo/MMFi_dataset) and [WiPose](https://github.com/NjtechCVLab/Wi-PoseDataset).
+
+Thanks to the original authors for their work!
+
+
+## Citation
+
+Please cite this work if you find it useful:.
+
+```
+@inproceedings{d2024hpe,
+  title={Hpe-li: Wifi-enabled lightweight dual selective kernel convolution for human pose estimation},
+  author={D. Gian, Toan and Dac Lai, Tien and Van Luong, Thien and Wong, Kok-Seng and Nguyen, Van-Dinh},
+  booktitle={European Conference on Computer Vision},
+  pages={93--111},
+  year={2024},
+  organization={Springer}
+}
+```
+
+
+
 
