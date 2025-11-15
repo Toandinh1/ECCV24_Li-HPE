@@ -50,6 +50,19 @@ This repo is the official implementation for [HPE-Li: WiFi-enabled Lightweight D
     - Test/
               ...
 ```
+
+#### Person-in-WiFi-3D Dataset (New Dataset)
+
+1. Request dataset [here](https://aiotgroup.github.io/Person-in-WiFi-3D/)
+2. Unzip all files from `wifipose_dataset.zip` to `./data/person_in_wifi_3d/` following directory structure:
+
+```
+- data/
+  - person_in_wifi_3d/
+    - train_data/
+    - test_data/
+```
+
 ## Run Simulations
 
 ### MM-Fi dataset
