@@ -1,5 +1,5 @@
 # HPE-Li 
-This repo is the official implementation for [HPE-Li: WiFi-enabled Lightweight Dual Selective Kernel Convolution for Human Pose Estimation](https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/04496.pdf), which was published at ECCV 2024. And, its extension was published in the TAI journal, named HPE-Li++. This repository allows researchers and practitioners to reproduce our results on MM-Fi and WiPose datasets.
+This repo is the official implementation for [**HPE-Li: WiFi-enabled Lightweight Dual Selective Kernel Convolution for Human Pose Estimation**](https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/04496.pdf), which was published at **ECCV 2024**. And, its extension was published in the TAI journal, named HPE-Li++. This repository was updated for **HPE-Li++** version with better performance than **HPE-Li**, which allows researchers and practitioners to reproduce our results on MM-Fi and WiPose datasets.
 
 ## HPE-Li Framework
 
