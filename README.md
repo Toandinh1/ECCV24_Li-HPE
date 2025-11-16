@@ -91,7 +91,7 @@ python denoiser_training.py
 
 ## Acknowledgements
 
-This repo is based on [MetaFi++](https://github.com/pridy999/metafi_pose_estimation). The data processing is borrowed from [MM-Fi](https://github.com/ybhbingo/MMFi_dataset) and [WiPose](https://github.com/NjtechCVLab/Wi-PoseDataset).
+This repo is based on [MetaFi++](https://github.com/pridy999/metafi_pose_estimation) and [SKNet](https://arxiv.org/pdf/1903.06586). The data processing is borrowed from [MM-Fi](https://github.com/ybhbingo/MMFi_dataset) and [WiPose](https://github.com/NjtechCVLab/Wi-PoseDataset).
 
 Thanks to the original authors for their work!
 
